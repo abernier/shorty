@@ -9,24 +9,28 @@ const filePath = resolve("./urls.csv");
 const jsonArray = await csv().fromFile(filePath);
 console.log(jsonArray);
 
-const map = new Map(jsonArray.map(({short, original}) => [short, original]))
+const map = new Map(jsonArray.map(({ short, original }) => [short, original]));
 
-app.get("/:short", async (req, res) => {
-  const { short } = req.params;
+app.get("*", async (req, res, next) => {
+  const short = req.url;
   // console.log("short", short);
 
-  const exist = map.has(short)
+  const exist = map.has(short);
 
-  if (exist) {
-    const original = map.get(short)
-    res.redirect(original);
-  } else {
-    res
-      .status(404)
-      .send(
-        `No \`${short}\` url found: see available short urls https://github.com/abernier/shorty/urls.csv`
-      );
-  }
+  if (!exist) return next(); // not found
+
+  // 301
+  const original = map.get(short);
+  res.redirect(original);
+});
+
+// 404 middleware
+app.use((req, res, next) => {
+  res
+    .status(404)
+    .send(
+      `<pre>Cannot GET ${req.url} (see: <a href="https://github.com/abernier/shorty/blob/main/urls.csv">https://github.com/abernier/shorty/blob/main/urls.csv</a>)</pre>`
+    );
 });
 
 const port = process.env.PORT || 3000;
