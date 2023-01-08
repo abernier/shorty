@@ -9,15 +9,17 @@ const filePath = resolve("./urls.csv");
 const jsonArray = await csv().fromFile(filePath);
 console.log(jsonArray);
 
+const map = new Map(jsonArray.map(({short, original}) => [short, original]))
+
 app.get("/:short", async (req, res) => {
   const { short } = req.params;
   // console.log("short", short);
 
-  const entry = jsonArray.find((item) => short && item.short === short);
-  // console.log(entry);
+  const exist = map.has(short)
 
-  if (entry) {
-    res.redirect(entry.original);
+  if (exist) {
+    const original = map.get(short)
+    res.redirect(original);
   } else {
     res
       .status(404)
