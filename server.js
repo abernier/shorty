@@ -26,12 +26,20 @@ app.get("*", async (req, res, next) => {
 });
 
 // 404
+const allLinks = Array.from(db.entries())
+  .map(([short, original]) => `<a href="${original}">${short}</a>`)
+  .join(" ");
+
 app.use((req, res, next) => {
-  res
-    .status(404)
-    .send(
-      `<pre>Cannot GET ${req.url} (see: <a href="https://github.com/abernier/shorty/blob/main/urls.csv">https://github.com/abernier/shorty/blob/main/urls.csv</a>)</pre>`
-    );
+  console.log();
+  const host = "http://localhost:3000";
+
+  res.status(404).send(
+    `
+      <pre>Cannot GET ${req.url}</pre>
+      <p><small>Did you mean: ${allLinks} ?</small></p>
+    `
+  );
 });
 
 const port = process.env.PORT || 3000;
