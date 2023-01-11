@@ -27,6 +27,7 @@ app.get("*", async (req, res, next) => {
 
 // 404
 const allLinks = Array.from(db.entries())
+  .sort()
   .map(([short, original]) => `<a href="${original}">${short}</a>`)
   .join(" ");
 
