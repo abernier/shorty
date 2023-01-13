@@ -42,7 +42,7 @@ app.use((req, res, next) => {
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <pre>Cannot GET ${req.url}</pre>
-      <p><small>Did you mean: ${allLinks}, or add <form action="https://github.com/abernier/shorty/edit/main/urls.csv" style="display:inline;"><button>new</button></form> one?</small></p>
+      <div><small>Did you mean: ${allLinks}, or add <form action="https://github.com/abernier/shorty/edit/main/urls.csv" style="display:inline;"><button>new</button></form> one?</small></div>
     `
   );
 });
