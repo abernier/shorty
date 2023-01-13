@@ -1,6 +1,6 @@
 # shorty
 
-Dead-simple shorturl server.
+Dead-simple shorturl server. Read more on [this article](http://abernier.link/shorty-domain).
 
 Database[^1] is here: [`urls.csv`](urls.csv) ([edit](https://github.com/abernier/shorty/edit/main/urls.csv))
 
