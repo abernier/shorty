@@ -37,6 +37,10 @@ app.use((req, res, next) => {
 
   res.status(404).send(
     `
+      <meta charset="utf-8">
+      <title>abernier.link</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
       <pre>Cannot GET ${req.url}</pre>
       <p><small>Did you mean: ${allLinks} ?</small></p>
     `
