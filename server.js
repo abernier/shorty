@@ -27,6 +27,7 @@ app.get("*", async (req, res, next) => {
 
 // 404
 const allLinks = Array.from(db.entries())
+  .filter(([short, original]) => !short.startsWith('_')) // hide short-urls starting with "_"
   .sort()
   .map(([short, original]) => `<a href="${original}">${short}</a>`)
   .join(" ");
